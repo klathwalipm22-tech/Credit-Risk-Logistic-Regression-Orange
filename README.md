@@ -113,44 +113,6 @@ This lab demonstrates how to build a **Credit Risk Prediction Model** using **Lo
 
 -----
 
-## 💻 Dataset Generation Code (Python)
-
-```python
-import csv, random, math
-random.seed(42)
-
-rows = []
-for i in range(100):
-    age = random.randint(22, 60)
-    income = random.randint(200000, 1500000)
-    loan_amount = random.randint(50000, 800000)
-    loan_term = random.choice([12, 24, 36, 48, 60])
-    credit_score = random.randint(500, 850)
-    existing_loans = random.randint(0, 4)
-    employment_years = random.randint(0, 20)
-    debt_to_income = round(loan_amount / income, 2)
-    monthly_emi = round(loan_amount / loan_term, 0)
-    savings = random.randint(10000, 500000)
-
-    # Default logic: low credit + high DTI + low savings = higher default risk
-    score = (credit_score - 500)/350 + (1 - debt_to_income) + (savings/500000) + (employment_years/20)
-    prob = 1 / (1 + math.exp(-(score - 1.5)))
-    default = 0 if random.random() < prob else 1
-
-    rows.append([i+1, age, income, loan_amount, loan_term, credit_score,
-                 existing_loans, employment_years, debt_to_income, savings, monthly_emi, default])
-
-with open('loan_default_dataset.csv', 'w', newline='') as f:
-    w = csv.writer(f)
-    w.writerow(['CustomerID','Age','Annual_Income','Loan_Amount','Loan_Term_Months',
-                'Credit_Score','Existing_Loans','Employment_Years','Debt_to_Income_Ratio',
-                'Savings_Balance','Monthly_EMI','Default'])
-    w.writerows(rows)
-
-print("Dataset created: 100 rows, 12 columns")
-```
-
------
 
 ## 💡 Business Understanding
 
